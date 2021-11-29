@@ -1,0 +1,259 @@
+---
+title: "Replication - Original Tables"
+author: "From Gamm and Kousser (2021)"
+output: pdf_document
+---
+
+```{r, include = F}
+# load packages
+library(lfe)
+library(lmtest)
+library(plm)
+library(stargazer)
+library(tidyverse)
+
+# read in data
+df <- read.delim("PoliticsProsperityJune2021.tab")
+```
+
+# Table 1
+```{r, include = F}
+# subset data
+df_tab1 <- df %>%
+  filter(year > 1870 & year < 1990)
+
+# regress model 1
+tab1_mod1 <- plm(Education_pc ~ leg_party_competition + year_1890 + year_1900 + 
+                                year_1910 + year_1930 + year_1940 + year_1960 + 
+                                year_1970 + year_1980, 
+                 index = "state", data = df_tab1)
+tab1_mod1_se <- coeftest(tab1_mod1, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 2
+tab1_mod2 <- plm(Education_pc ~ leg_party_competition + Statewide_Competition + 
+                                house_dem + senate_dem + gov_dem + 
+                                CPI_per_capita_income + foreignborn_pct + 
+                                black_pct + othernonwhite_pct + urban_pct + 
+                                year_1890 + year_1900 + year_1910 + year_1930 + 
+                                year_1940 + year_1960 + year_1970 + year_1980, 
+                 index = "state", data = df_tab1)
+tab1_mod2_se <- coeftest(tab1_mod2, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 3
+tab1_mod3 <- plm(HealthSewerSanitation_pc ~ leg_party_competition + 
+                                year_1890 + year_1900 + year_1910 + year_1930 +
+                                year_1940 + year_1960 + year_1970 + year_1980,
+                 index = "state", data = df_tab1)
+tab1_mod3_se <-coeftest(tab1_mod3, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 4
+tab1_mod4 <- plm(HealthSewerSanitation_pc ~ leg_party_competition + 
+                                Statewide_Competition  + house_dem + senate_dem +
+                                gov_dem + CPI_per_capita_income + foreignborn_pct +
+                                black_pct + othernonwhite_pct + urban_pct +
+                                year_1890 + year_1900 + year_1910 + year_1930 +
+                                year_1940 + year_1960 + year_1970 + year_1980,
+                 index = "state", data = df_tab1)
+tab1_mod4_se <-coeftest(tab1_mod4, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 5
+tab1_mod5 <- plm(Transportation_pc ~ leg_party_competition +
+                                year_1890 + year_1900 + year_1910 + year_1930 +
+                                year_1940 + year_1960 + year_1970 + year_1980,
+                 index = "state", data = df_tab1)
+tab1_mod5_se <-coeftest(tab1_mod5, function(x) vcovHC(x, type = 'sss'))
+    
+# regress model 6             
+tab1_mod6 <- plm(Transportation_pc ~ leg_party_competition + 
+                                Statewide_Competition  + house_dem + senate_dem +
+                                gov_dem + CPI_per_capita_income + foreignborn_pct +
+                                black_pct + othernonwhite_pct + urban_pct +
+                                year_1890 + year_1900 + year_1910 + year_1930 +
+                                year_1940 + year_1960 + year_1970 + year_1980,
+                 index = "state", data = df_tab1)
+tab1_mod6_se <-coeftest(tab1_mod6, function(x) vcovHC(x, type = 'sss'))
+```
+
+```{r, results = "asis"}
+# print Table 1
+stargazer(tab1_mod1_se, tab1_mod2_se, tab1_mod3_se, 
+          tab1_mod4_se, tab1_mod5_se, tab1_mod6_se,
+          header = F, type = "latex", digits = 2, style = "apsr",
+          title = "Party Competition Predicts Higher Human Capital and Infrastructure Spending, 1880-1980",
+          column.labels = c("Education spending", "Health spending",
+                            "Transportation spending"),
+          column.separate = c(2, 2, 2),
+          covariate.labels = c("Legislative party competition",
+                               "Electoral competition", "Democratic house",
+                               "Democratic senate", "Democratic governor",
+                               "Income per capita", "Foreign-born percentage",
+                               "Black percentage", "Other nonwhite percentage", 
+                               "Urban population percentage"),
+          omit = c("Constant", "year_1890", "year_1900", "year_1910", "year_1920",
+                   "year_1930", "year_1940", "year_1960", "year_1970", "year_1980"),
+          add.lines = list(c("State fixed effects", "included", "included",
+                             "included", "included", "included", "included"),
+                           c("Year fixed effects", "included", "included",
+                             "included", "included", "included", "included"),
+                           c("Observations", "398", "380", "326", "310", "374", "357"),
+                           c("R-Squared", "0.96", "0.97", "0.89", "0.92", "0.87", "0.89"),
+                           c("Adj. R-Squared", "0.95", "0.96", "0.87", "0.90", "0.85", "0.87")))
+```
+
+\newpage
+
+# Table 2
+```{r, include = F}
+# subset for model 1
+df_tab2_mod1 <- df %>%
+  filter(year >= 1930 & year < 2020)
+
+# regress model 1
+tab2_mod1 <- plm(infantmortality ~ HealthSewerSanitation_pc + CPI_per_capita_income +
+                                   foreignborn_pct + black_pct + othernonwhite_pct +
+                                   urban_pct + as.factor(year),
+                 index = "state", data = df_tab2_mod1)
+tab2_mod1_se <- coeftest(tab2_mod1, function(x) vcovHC(x, type = 'sss'))
+
+# subset for model 2
+df_tab2_mod2 <- df %>%
+  filter(year >= 1880 & year <= 2010) %>%
+  mutate(f3_at_birth_life_expectancy = dplyr::lead(at_birth_life_expectancy, 3)) %>%
+  filter(year <= 1980)
+
+# regress model 2
+tab2_mod2 <- plm(f3_at_birth_life_expectancy ~ HealthSewerSanitation_pc +
+                                   CPI_per_capita_income + foreignborn_pct + 
+                                   black_pct + othernonwhite_pct + urban_pct +
+                                   as.factor(year),
+                 index = "state", data = df_tab2_mod2)
+tab2_mod2_se <- coeftest(tab2_mod2, function(x) vcovHC(x, type = 'sss'))
+
+# subset for model 3
+df_tab2_mod3 <- df %>%
+  filter(year >= 1880 & year <= 2010)
+
+# regress model 3
+tab2_mod3 <- plm(graduation_combined ~ Education_pc + CPI_per_capita_income +
+                                   foreignborn_pct + black_pct+ othernonwhite_pct +
+                                   urban_pct + south + as.factor(year),
+                 index = "state", data = df_tab2_mod3)
+tab2_mod3_se <- coeftest(tab2_mod3, function(x) vcovHC(x, type = 'sss'))
+
+# use same data as model 3, regress model 4
+tab2_mod4 <- plm(illiteracy_proportional_30 ~ Education_pc + CPI_per_capita_income +
+                                   foreignborn_pct + black_pct + othernonwhite_pct +
+                                   urban_pct + south + as.factor(year),
+                 index = "state", data = df_tab2_mod3)
+tab2_mod4_se <- coeftest(tab2_mod4, function(x) vcovHC(x, type = 'sss'))
+```
+
+```{r, results = "asis"}
+# print Table 2
+stargazer(tab2_mod1_se, tab2_mod2_se, tab2_mod3_se, tab2_mod4_se,
+          header = F, type = "latex", font.size = "tiny", style = "apsr",
+          title = "Spending Levels Predict Development, 1880-2010",
+          column.labels = c("Infant mortality", 
+                            "Life expectancy (30 years later)",
+                            "High school completion", 
+                            "Illiteracy rate (30 years later)"),
+          covariate.labels = c("Health, sewer, sanitation spending per capita",
+                               "Education spending per capita", 
+                               "Income per capita",
+                               "Foreign-born percentage", "Black percentage", 
+                               "Other nonwhite percentage", "Urban population percentage"),
+          omit = c("Constant", "south", "year"),
+          add.lines = list(c("State fixed effects",
+                             "included", "included", "included", "included"),
+                           c("Year fixed effects",
+                             "included", "included", "included", "included"),
+                           c("Observations", "240", "272", "374", "168"),
+                           c("R-Squared", "0.92", "0.98", "0.96", "0.43"),
+                           c("Adjusted R-Squared", "0.89", "0.97", "0.96", "0.14")))
+```
+
+\newpage
+
+# Table 3
+```{r, include = F}
+# create new dataframe for "full sample"
+df_tab3_full <- df
+
+# subset for 1880-1940 sample
+df_tab3_part <- df %>%
+  filter(year >= 1880 & year <= 1940)
+
+# regress model 1
+tab3_mod1 <- plm(CPI_per_capita_income_next30 ~ HealthSewerSanitation_pc + 
+                   CPI_per_capita_income + foreignborn_pct + black_pct + 
+                   othernonwhite_pct + urban_pct + south + as.factor(year),
+                 index = "state", data = df_tab3_full)
+tab3_mod1_se <- coeftest(tab3_mod1, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 2
+tab3_mod2 <- plm(CPI_per_capita_income_next30 ~ HealthSewerSanitation_pc + 
+                   CPI_per_capita_income + foreignborn_pct + black_pct + 
+                   othernonwhite_pct + urban_pct + south + as.factor(year),
+                 index = "state", data = df_tab3_part)
+tab3_mod2_se <- coeftest(tab3_mod2, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 3
+tab3_mod3 <- plm(CPI_per_capita_income_next30 ~ Education_pc + 
+                   CPI_per_capita_income + foreignborn_pct + black_pct + 
+                   othernonwhite_pct + urban_pct + south + as.factor(year),
+                 index = "state", data = df_tab3_full)
+tab3_mod3_se <- coeftest(tab3_mod3, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 4
+tab3_mod4 <- plm(CPI_per_capita_income_next30 ~ Education_pc + 
+                   CPI_per_capita_income + foreignborn_pct + black_pct + 
+                   othernonwhite_pct + urban_pct + south + as.factor(year),
+                 index = "state", data = df_tab3_part)
+tab3_mod4_se <- coeftest(tab3_mod4, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 5
+tab3_mod5 <- plm(CPI_per_capita_income_next30 ~ Transportation_pc + 
+                   CPI_per_capita_income + foreignborn_pct + black_pct + 
+                   othernonwhite_pct + urban_pct + south + as.factor(year),
+                 index = "state", data = df_tab3_full)
+tab3_mod5_se <- coeftest(tab3_mod5, function(x) vcovHC(x, type = 'sss'))
+
+# regress model 6
+tab3_mod6 <- plm(CPI_per_capita_income_next30 ~ Transportation_pc + 
+                   CPI_per_capita_income + foreignborn_pct + black_pct + 
+                   othernonwhite_pct + urban_pct + south + as.factor(year),
+                 index = "state", data = df_tab3_part)
+tab3_mod6_se <- coeftest(tab3_mod6, function(x) vcovHC(x, type = 'sss'))
+```
+
+```{r, results = "asis"}
+# print Table 3
+stargazer(tab3_mod1_se, tab3_mod2_se, tab3_mod3_se, 
+          tab3_mod4_se, tab3_mod5_se, tab3_mod6_se,
+          header = F, type = "latex", font.size = "tiny", style = "apsr", digits = 2,
+          title = "Health and Education Spending Levels Predict Income (Only in Pre-New Deal Period)",
+          column.labels = c("Full sample", "1880-1940", 
+                            "Full sample", "1880-1940",
+                            "Full sample", "1880-1940"),
+          covariate.labels = c("Health, sewer, sanitation spending per capita",
+                               "Education spending per capita", 
+                               "Transportation spending per capita", 
+                               "Income per capita",
+                               "Foreign-born pct", "Black pct", 
+                               "Other nonwhite pct", "Urban population pct"),
+          omit = c("Constant", "south", "year"),
+          add.lines = list(c("State fixed effects",
+                             "included", "included", "included", 
+                             "included", "included", "included"),
+                           c("Year fixed effects",
+                             "included", "included", "included", 
+                             "included", "included", "included"),
+                           c("Observations", "336", "192", "408", 
+                             "264", "384", "240"),
+                           c("Orig. R-Squared", "0.98", "0.99", "0.98", 
+                             "0.98", "0.98", "0.98"),
+                           c("R-Squared", "0.92", "0.99", "0.93", 
+                             "0.97", "0.93", "0.97"),
+                           c("Adjusted R-Squared", "0.91", "0.98", "0.91", 
+                             "0.96", "0.91", "0.96")))
+```

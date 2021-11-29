@@ -15,7 +15,7 @@ library(lmtest)
 library(stargazer)
 library(haven)
 
-df <- read_dta('PoliticsProsperityJune2021.dta')
+df <- read.delim("PoliticsProsperityJune2021.tab")
 ```
 
 ## Figure 1

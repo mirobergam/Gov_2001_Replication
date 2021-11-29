@@ -47,6 +47,8 @@ df_fig1 %>%
   theme(legend.position = 'bottom') +
   labs(linetype = '')
 
+ggsave(path = "figures", filename = "fig1.png")
+
 ```
 
 ```{r, fig.show="hold", out.width="50%"}
@@ -143,6 +145,8 @@ P3 <- df_fig2c %>%
 library(cowplot)
 
 plot_grid(P1, P2, P3, nrow = 3)
+
+ggsave(path = "figures", filename = "fig2.png")
 
 ```
 
@@ -242,6 +246,8 @@ P3 <- df_fig3c %>%
 library(cowplot)
 
 plot_grid(P1, P2, P3, nrow = 3)
+
+ggsave(path = "figures", filename = "fig3.png")
 
 ```
 
@@ -362,6 +368,7 @@ grid.arrange(p1, p2, p3, p4, p5, nrow =3,
                c(NA, 5, 5, NA)
              ))
 
+ggsave(path = "figures", filename = "fig4.png")
 
 ```
 
@@ -404,7 +411,8 @@ f5 <- df_fig5 %>%
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank())
 
-ggsave("Figure 5 Replication.png", plot = f5, height = 6, width = 8)
+ggsave(path = "figures", filename = "fig5.png", plot = f5, height = 6, width = 8)
+
 
 ```
 
@@ -446,7 +454,7 @@ f6 <- df_fig6 %>%
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank())
 
-ggsave("Figure 6 Replication.png", plot = f6, height = 6, width = 8)
+ggsave(path = "figures", filename = "fig6.png", plot = f6, height = 6, width = 8)
 
 ```
 
@@ -489,7 +497,7 @@ f7 <- df_fig7 %>%
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank())
 
-ggsave("Figure 7 Replication.png", plot = f7, height = 6, width = 8)
+ggsave(path = "figures", filename = "fig7.png", plot = f7, height = 6, width = 8)
 
 ```
 
@@ -532,7 +540,7 @@ f8 <- df_fig8 %>%
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank())
 
-ggsave("Figure 8 Replication.png", plot = f8, height = 6, width = 10)
+ggsave(path = "figures", filename = "fig8.png", plot = f8, height = 6, width = 10)
 
 ```
 
@@ -575,7 +583,7 @@ f9 <- df_fig9 %>%
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank())
 
-ggsave("Figure 9 Replication.png", plot = f9, height = 6, width = 10)
+ggsave(path = "figures", filename = "fig9.png", plot = f9, height = 6, width = 10)
 
 ```
 
@@ -671,6 +679,8 @@ stargazer(tab1_mod1_se, tab1_mod2_se, tab1_mod3_se,
                            c("Observations", "398", "380", "326", "310", "374", "357"),
                            c("R-Squared", "0.96", "0.97", "0.89", "0.92", "0.87", "0.89")))
 
+gtsave(path = 'figures', filename = 'tab1.png')
+
 ```
 
 ```{r, fig.show="hold", out.width="50%"}
@@ -750,6 +760,8 @@ stargazer(tab2_mod1_se, tab2_mod2_se, tab2_mod3_se, tab2_mod4_se,
                              "included", "included", "included", "included"),
                            c("Observations", "240", "272", "374", "168"),
                            c("R-Squared", "0.92", "0.98", "0.96", "0.43")))
+
+gtsave(path = 'figures', filename = 'tab2.png')
 
 ```
 
@@ -841,6 +853,8 @@ stargazer(tab3_mod1_se, tab3_mod2_se, tab3_mod3_se,
                              "264", "384", "240"),
                            c("R-Squared", "0.98", "0.99", "0.98", 
                              "0.98", "0.98", "0.98")))
+
+gtsave(path = 'figures', filename = 'tab3.png')
 
 ```
 

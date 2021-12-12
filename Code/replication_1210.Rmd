@@ -14,6 +14,7 @@ library(stargazer)
 library(tidyverse)
 
 lag <- Hmisc::Lag
+select <- dplyr::select
 # read in data
 df <- read.delim("../data/PoliticsProsperityJune2021.tab")
 ```
@@ -759,7 +760,7 @@ tab7_mod6_se <- coeftest(tab7_mod6, function(x) vcovHC(x, type = 'sss'))
 stargazer(tab7_mod1_se, tab7_mod2_se, tab7_mod3_se, 
           tab7_mod4_se, tab7_mod5_se, tab7_mod6_se,
           header = F, type = "latex", font.size = "tiny", style = "apsr", digits = 2,
-          title = "Health and Education Spending Levels Predict Income (Only in Pre-New Deal Period)",
+          title = "Education Spending Levels Predict Income in Pre-New Deal Period",
           column.labels = c("Full sample", "1880-1940", 
                             "Full sample", "1880-1940",
                             "Full sample", "1880-1940"),
@@ -873,28 +874,28 @@ df_extfig1 %>%
 coef_df1 <- tribble(
 ~Estimate, ~SE, ~DV, ~IV, ~Confounders, ~Specification,
 tab1_mod1_se[1,][1], tab1_mod1_se[1,][2], "Education Spending", "Leg. Party Comp.", "No", "Fixed Effects",
-lag1_mod1_se[1,][1], lag1_mod1_se[1,][2], "Education Spending", "Leg. Party Comp.", "No", "Lag + FE",
-lag3_mod1_se[1,][1], lag3_mod1_se[1,][2], "Education Spending", "Leg. Party Comp.", "No", "Lag, No FE",
+lag1_mod1_se[2,][1], lag1_mod1_se[2,][2], "Education Spending", "Leg. Party Comp.", "No", "Lag + FE",
+lag3_mod1_se[2,][1], lag3_mod1_se[2,][2], "Education Spending", "Leg. Party Comp.", "No", "Lag, No FE",
 tab5_mod1_se[1,][1], tab5_mod1_se[1,][2], "Education Spending", "Leg. Party Comp.", "No", "No Lag or FE",
 tab1_mod2_se[1,][1], tab1_mod2_se[1,][2], "Education Spending", "Leg. Party Comp.", "Yes", "Fixed Effects",
-lag1_mod2_se[1,][1], lag1_mod2_se[1,][2], "Education Spending", "Leg. Party Comp.", "Yes", "Lag + FE",
-lag3_mod2_se[1,][1], lag3_mod2_se[1,][2], "Education Spending", "Leg. Party Comp.", "Yes", "Lag, No FE",
+lag1_mod2_se[2,][1], lag1_mod2_se[2,][2], "Education Spending", "Leg. Party Comp.", "Yes", "Lag + FE",
+lag3_mod2_se[2,][1], lag3_mod2_se[2,][2], "Education Spending", "Leg. Party Comp.", "Yes", "Lag, No FE",
 tab5_mod2_se[1,][1], tab5_mod2_se[1,][2], "Education Spending", "Leg. Party Comp.", "Yes", "No Lag or FE",
 tab1_mod3_se[1,][1], tab1_mod3_se[1,][2], "Health Spending", "Leg. Party Comp.", "No", "Fixed Effects",
-lag1_mod3_se[1,][1], lag1_mod3_se[1,][2], "Health Spending", "Leg. Party Comp.", "No", "Lag + FE",
-lag3_mod3_se[1,][1], lag3_mod3_se[1,][2], "Health Spending", "Leg. Party Comp.", "No", "Lag, No FE",
+lag1_mod3_se[2,][1], lag1_mod3_se[2,][2], "Health Spending", "Leg. Party Comp.", "No", "Lag + FE",
+lag3_mod3_se[2,][1], lag3_mod3_se[2,][2], "Health Spending", "Leg. Party Comp.", "No", "Lag, No FE",
 tab5_mod3_se[1,][1], tab5_mod3_se[1,][2], "Health Spending", "Leg. Party Comp.", "No", "No Lag or FE",
 tab1_mod4_se[1,][1], tab1_mod4_se[1,][2], "Health Spending", "Leg. Party Comp.", "Yes", "Fixed Effects",
-lag1_mod4_se[1,][1], lag1_mod4_se[1,][2], "Health Spending", "Leg. Party Comp.", "Yes", "Lag + FE",
-lag3_mod4_se[1,][1], lag3_mod4_se[1,][2], "Health Spending", "Leg. Party Comp.", "Yes", "Lag, No FE",
+lag1_mod4_se[2,][1], lag1_mod4_se[2,][2], "Health Spending", "Leg. Party Comp.", "Yes", "Lag + FE",
+lag3_mod4_se[2,][1], lag3_mod4_se[2,][2], "Health Spending", "Leg. Party Comp.", "Yes", "Lag, No FE",
 tab5_mod4_se[1,][1], tab5_mod4_se[1,][2], "Health Spending", "Leg. Party Comp.", "Yes", "No Lag or FE",
 tab1_mod5_se[1,][1], tab1_mod5_se[1,][2], "Transportation Spending", "Leg. Party Comp.", "No", "Fixed Effects",
-lag1_mod5_se[1,][1], lag1_mod5_se[1,][2], "Transportation Spending", "Leg. Party Comp.", "No", "Lag + FE",
-lag3_mod5_se[1,][1], lag3_mod5_se[1,][2], "Transportation Spending", "Leg. Party Comp.", "No", "Lag, No FE",
+lag1_mod5_se[2,][1], lag1_mod5_se[2,][2], "Transportation Spending", "Leg. Party Comp.", "No", "Lag + FE",
+lag3_mod5_se[2,][1], lag3_mod5_se[2,][2], "Transportation Spending", "Leg. Party Comp.", "No", "Lag, No FE",
 tab5_mod5_se[1,][1], tab5_mod5_se[1,][2], "Transportation Spending", "Leg. Party Comp.", "No", "No Lag or FE",
 tab1_mod6_se[1,][1], tab1_mod6_se[1,][2], "Transportation Spending", "Leg. Party Comp.", "Yes", "Fixed Effects",
-lag1_mod6_se[1,][1], lag1_mod6_se[1,][2], "Transportation Spending", "Leg. Party Comp.", "Yes", "Lag + FE",
-lag3_mod6_se[1,][1], lag3_mod6_se[1,][2], "Transportation Spending", "Leg. Party Comp.", "Yes", "Lag, No FE",
+lag1_mod6_se[2,][1], lag1_mod6_se[2,][2], "Transportation Spending", "Leg. Party Comp.", "Yes", "Lag + FE",
+lag3_mod6_se[2,][1], lag3_mod6_se[2,][2], "Transportation Spending", "Leg. Party Comp.", "Yes", "Lag, No FE",
 tab5_mod6_se[1,][1], tab5_mod6_se[1,][2], "Transportation Spending", "Leg. Party Comp.", "Yes", "No Lag or FE"
 ) %>%
   mutate(min = Estimate - 1.96*SE,
@@ -913,9 +914,9 @@ coef_df1 %>%
   geom_vline(xintercept = 0, col = 'red', lty = 'dashed') +
   theme_minimal() +
   labs(x = 'Coefficient Estimate', y = '') +
-  geom_text(x = 0, y = 9.5, label = "DV: Education Spending") +
-  geom_text(x = 0, y = 5.5, label = "DV: Health Spending") +
-  geom_text(x = 0, y = 1.5, label = "DV: Transportation Spending") +
+  geom_text(x = -1, y = 9.5, label = "DV: Education Spending") +
+  geom_text(x = -1.1, y = 5.5, label = "DV: Health Spending") +
+  geom_text(x = -0.8, y = 1.5, label = "DV: Transportation Spending") +
   geom_text(x = 3, y = 10.5, label = "No Covariates (Model 1)", size = 3) +
   geom_text(x = 3, y = 8.5, label = "With Covariates (Model 2)", size = 3) +
   geom_text(x = 3, y = 6.5, label = "No Covariates (Model 3)", size = 3) +
@@ -939,20 +940,20 @@ coef_df1 %>%
 coef_df2 <- tribble(
 ~Estimate, ~SE, ~DV, ~IV, ~Specification,
 tab2_mod1_se[1,][1], tab2_mod1_se[1,][2], "Infant Mortality", "Health, etc. Spending", "Fixed Effects",
-lag2_mod1_se[1,][1], lag2_mod1_se[1,][2], "Infant Mortality", "Health, etc. Spending", "Lag + FE",
-lag4_mod1_se[1,][1], lag4_mod1_se[1,][2], "Infant Mortality", "Health, etc. Spending", "Lag, No FE",
+lag2_mod1_se[2,][1], lag2_mod1_se[2,][2], "Infant Mortality", "Health, etc. Spending", "Lag + FE",
+lag4_mod1_se[2,][1], lag4_mod1_se[2,][2], "Infant Mortality", "Health, etc. Spending", "Lag, No FE",
 tab6_mod1_se[1,][1], tab6_mod1_se[1,][2], "Infant Mortality", "Health, etc. Spending", "No Lag or FE",
 tab2_mod2_se[1,][1], tab2_mod2_se[1,][2], "Life Expectancy", "Health, etc. Spending", "Fixed Effects",
-lag2_mod2_se[1,][1], lag2_mod2_se[1,][2], "Life Expectancy", "Health, etc. Spending", "Lag + FE",
-lag4_mod2_se[1,][1], lag4_mod2_se[1,][2], "Life Expectancy", "Health, etc. Spending", "Lag, No FE",
+lag2_mod2_se[2,][1], lag2_mod2_se[2,][2], "Life Expectancy", "Health, etc. Spending", "Lag + FE",
+lag4_mod2_se[2,][1], lag4_mod2_se[2,][2], "Life Expectancy", "Health, etc. Spending", "Lag, No FE",
 tab6_mod2_se[1,][1], tab6_mod2_se[1,][2], "Life Expectancy", "Health, etc. Spending", "No Lag or FE",
 tab2_mod3_se[1,][1], tab2_mod3_se[1,][2], "High School Completion", "Education Spending", "Fixed Effects",
-lag2_mod3_se[1,][1], lag2_mod3_se[1,][2], "High School Completion", "Education Spending", "Lag + FE",
-lag4_mod3_se[1,][1], lag4_mod3_se[1,][2], "High School Completion", "Education Spending", "Lag, No FE",
+lag2_mod3_se[2,][1], lag2_mod3_se[2,][2], "High School Completion", "Education Spending", "Lag + FE",
+lag4_mod3_se[2,][1], lag4_mod3_se[2,][2], "High School Completion", "Education Spending", "Lag, No FE",
 tab6_mod3_se[1,][1], tab6_mod3_se[1,][2], "High School Completion", "Education Spending", "No Lag or FE",
 tab2_mod4_se[1,][1], tab2_mod4_se[1,][2], "Illiteracy Rate", "Education Spending", "Fixed Effects",
-lag2_mod4_se[1,][1], lag2_mod4_se[1,][2], "Illiteracy Rate", "Education Spending", "Lag + FE",
-lag4_mod4_se[1,][1], lag4_mod4_se[1,][2], "Illiteracy Rate", "Education Spending", "Lag, No FE",
+lag2_mod4_se[2,][1], lag2_mod4_se[2,][2], "Illiteracy Rate", "Education Spending", "Lag + FE",
+lag4_mod4_se[2,][1], lag4_mod4_se[2,][2], "Illiteracy Rate", "Education Spending", "Lag, No FE",
 tab6_mod4_se[1,][1], tab6_mod4_se[1,][2], "Illiteracy Rate", "Education Spending",  "No Lag or FE"
 ) %>%
   mutate(min = Estimate - 1.96*SE,
@@ -970,10 +971,10 @@ coef_df2 %>%
   theme_minimal() +
   labs(x = 'Coefficient Estimate', y = '') +
   theme(axis.text.y = element_blank()) +
-  geom_text(x = 0.3, y = 7.2, label = "DV: Infant Mortality (Model 1)") +
-  geom_text(x = 0.3, y = 5.2, label = "DV: Life Expectancy (Model 2)") +
-  geom_text(x = 0.3, y = 3.2, label = "DV: HS Completion (Model 3)") +
-  geom_text(x = 0.3, y = 1.2, label = "DV: Illiteracy Rate (Model 4)") +
+  geom_text(x = -0.045, y = 7.2, label = "DV: Infant Mortality (Model 1)") +
+  geom_text(x = -0.045, y = 5.2, label = "DV: Life Expectancy (Model 2)") +
+  geom_text(x = -0.045, y = 3.2, label = "DV: HS Completion (Model 3)") +
+  geom_text(x = -0.045, y = 1.2, label = "DV: Illiteracy Rate (Model 4)") +
   geom_vline(xintercept = 0, col = 'red', lty = 'dashed') +
   scale_fill_manual(values = c('#00BFC4', '#C77CFF', '#F8766D', '#7CAE00')) + 
   scale_color_manual(values = c('#00BFC4', '#C77CFF', '#F8766D', '#7CAE00')) + 
@@ -992,37 +993,49 @@ coef_df3 <- tribble(
 ~Estimate, ~SE, ~DV, ~IV, ~Model, ~Results,
 tab3_mod1_se[1,][1], tab3_mod1_se[1,][2], "Income per capita", "Health spending", "1", "Original",
 tab3_mod1_se[1,][1], tab3_mod1_se[1,][2], "Income per capita", "Health spending", "1", "Replication",
+tab7_mod1_se[1,][1], tab7_mod1_se[1,][2], "Income per capita", "Health spending", "1", "No FE",
 tab3_mod1_se[2,][1], tab3_mod1_se[2,][2], "Income per capita", "Health spending", "1", "Original",
 tab3_mod1_se[2,][1]+1, tab3_mod1_se[2,][2], "Income per capita", "Health spending", "1", "Replication",
+tab7_mod1_se[2,][1], tab7_mod1_se[2,][2], "Income per capita", "Health spending", "1", "No FE",
 tab3_mod2_se[1,][1], tab3_mod2_se[1,][2], "Income per capita", "Health spending", "2", "Original",
 tab3_mod2_se[1,][1], tab3_mod2_se[1,][2], "Income per capita", "Health spending", "2", "Replication",
+tab7_mod2_se[1,][1], tab7_mod2_se[1,][2], "Income per capita", "Health spending", "2", "No FE",
 tab3_mod2_se[2,][1], tab3_mod2_se[2,][2], "Income per capita", "Health spending", "2", "Original",
 tab3_mod2_se[2,][1]+1, tab3_mod2_se[2,][2], "Income per capita", "Health spending", "2", "Replication",
+tab7_mod2_se[2,][1], tab7_mod2_se[2,][2], "Income per capita", "Health spending", "2", "No FE",
 tab3_mod3_se[1,][1], tab3_mod3_se[1,][2], "Income per capita", "Education spending", "3", "Original",
 tab3_mod3_se[1,][1], tab3_mod3_se[1,][2], "Income per capita", "Education spending", "3", "Replication",
+tab7_mod3_se[1,][1], tab7_mod3_se[1,][2], "Income per capita", "Education spending", "3", "No FE",
 tab3_mod3_se[2,][1], tab3_mod3_se[2,][2], "Income per capita", "Education spending", "3", "Original",
 tab3_mod3_se[2,][1]+1, tab3_mod3_se[2,][2], "Income per capita", "Education spending", "3", "Replication",
+tab7_mod3_se[2,][1], tab7_mod3_se[2,][2], "Income per capita", "Education spending", "3", "No FE",
 tab3_mod4_se[1,][1], tab3_mod4_se[1,][2], "Income per capita", "Education spending", "4", "Original",
 tab3_mod4_se[1,][1], tab3_mod4_se[1,][2], "Income per capita", "Education spending", "4", "Replication",
+tab7_mod4_se[1,][1], tab7_mod4_se[1,][2], "Income per capita", "Education spending", "4", "No FE",
 tab3_mod4_se[2,][1], tab3_mod4_se[2,][2], "Income per capita", "Education spending", "4", "Original",
 tab3_mod4_se[2,][1]+1, tab3_mod4_se[2,][2], "Income per capita", "Education spending", "4", "Replication",
+tab7_mod4_se[2,][1], tab7_mod4_se[2,][2], "Income per capita", "Education spending", "4", "No FE",
 tab3_mod5_se[1,][1], tab3_mod5_se[1,][2], "Income per capita", "Transportation spending", "5", "Original",
 tab3_mod5_se[1,][1], tab3_mod5_se[1,][2], "Income per capita", "Transportation spending", "5", "Replication",
+tab7_mod5_se[1,][1], tab7_mod5_se[1,][2], "Income per capita", "Transportation spending", "5", "No FE",
 tab3_mod5_se[2,][1], tab3_mod5_se[2,][2], "Income per capita", "Transportation spending", "5", "Original",
 tab3_mod5_se[2,][1]+1, tab3_mod5_se[2,][2], "Income per capita", "Transportation spending", "5", "Replication",
+tab7_mod5_se[2,][1], tab7_mod5_se[2,][2], "Income per capita", "Transportation spending", "5", "No FE",
 tab3_mod6_se[1,][1], tab3_mod6_se[1,][2], "Income per capita", "Transportation spending", "6", "Original",
 tab3_mod6_se[1,][1], tab3_mod6_se[1,][2], "Income per capita", "Transportation spending", "6", "Replication",
+tab7_mod6_se[1,][1], tab7_mod6_se[1,][2], "Income per capita", "Transportation spending", "6", "No FE",
 tab3_mod6_se[2,][1], tab3_mod6_se[2,][2], "Income per capita", "Transportation spending", "6", "Original",
 tab3_mod6_se[2,][1]+1, tab3_mod6_se[2,][2], "Income per capita", "Transportation spending", "6", "Replication",
+tab7_mod6_se[2,][1], tab7_mod6_se[2,][2], "Income per capita", "Transportation spending", "6", "No FE",
 ) %>%
   mutate(min = Estimate - 1.96*SE,
          max = Estimate + 1.96*SE)
-coef_df3$y_pos <- c(10.9, 11.1, 11.9, 12.1,
-                    8.9, 9.1, 9.9, 10.1,
-                    6.9, 7.1, 7.9, 8.1,
-                    4.9, 5.1, 5.9, 6.1,
-                    2.9, 3.1, 3.9, 4.1,
-                    0.9, 1.1, 1.9, 2.1)
+coef_df3$y_pos <- c(10.9, 11.1, 11.3, 11.9, 12.1, 12.3,
+                    8.9, 9.1, 9.3, 9.9, 10.1, 10.3,
+                    6.9, 7.1, 7.3, 7.9, 8.1, 8.3,
+                    4.9, 5.1, 5.3, 5.9, 6.1, 6.3,
+                    2.9, 3.1, 3.3, 3.9, 4.1, 4.3,
+                    0.9, 1.1, 1.3, 1.9, 2.1, 2.3)
 coef_df3 %>%
   ggplot() +
   geom_point(aes(x = Estimate, y = y_pos, fill = Results, shape = Results), size = 3) +
@@ -1032,26 +1045,27 @@ coef_df3 %>%
   theme(axis.text.y = element_blank()) +
   geom_errorbarh(aes(xmin = min, xmax = max, y = y_pos, col = Results,
                      height = 0)) +
-  geom_text(x = 6, y = 12, label = "Health Spending (Full Sample)", size = 2.5) +
-  geom_text(x = 6, y = 11, label = "Income Per Capita (Full Sample)", size = 2.5) +
-  geom_text(x = 20, y = 11.5, label = "Model 1") +
-  geom_text(x = -6, y = 10, label = "Health Spending (1880-1940)", size = 2.5) +
-  geom_text(x = -6, y = 9, label = "Income Per Capita (1880-1940)", size = 2.5) +
-  geom_text(x = 20, y = 9.5, label = "Model 2") +
-  geom_text(x = 6, y = 8, label = "Educ. Spending (Full Sample)", size = 2.5) +
-  geom_text(x = 6, y = 7, label = "Income Per Capita (Full Sample)", size = 2.5) +
-  geom_text(x = 20, y = 7.5, label = "Model 3") +
-  geom_text(x = -6, y = 6, label = "Educ. Spending (1880-1940)", size = 2.5) +
-  geom_text(x = -6, y = 5, label = "Income Per Capita (1880-1940)", size = 2.5) +
-  geom_text(x = 20, y = 5.5, label = "Model 4") +
-  geom_text(x = 6, y = 4, label = "Transp. Spending (Full Sample)", size = 2.5) +
-  geom_text(x = 6, y = 3, label = "Income Per Capita (Full Sample)", size = 2.5) +
-  geom_text(x = 20, y = 3.5, label = "Model 5") +
-  geom_text(x = -6, y = 2, label = "Transp. Spending (1880-1940)", size = 2.5) +
-  geom_text(x = -6, y = 1, label = "Income Per Capita (1880-1940)", size = 2.5) +
-  geom_text(x = 20, y = 1.5, label = "Model 6") +
+  geom_text(x = 25, y = 12, label = "Health Spending (Full Sample)", size = 2.5) +
+  geom_text(x = 25, y = 11, label = "Income Per Capita (Full Sample)", size = 2.5) +
+  geom_text(x = -10, y = 11.5, label = "Model 1") +
+  geom_text(x = 25, y = 10, label = "Health Spending (1880-1940)", size = 2.5) +
+  geom_text(x = 25, y = 9, label = "Income Per Capita (1880-1940)", size = 2.5) +
+  geom_text(x = -10, y = 9.5, label = "Model 2") +
+  geom_text(x = 25, y = 8, label = "Educ. Spending (Full Sample)", size = 2.5) +
+  geom_text(x = 25, y = 7, label = "Income Per Capita (Full Sample)", size = 2.5) +
+  geom_text(x = -10, y = 7.5, label = "Model 3") +
+  geom_text(x = 25, y = 6, label = "Educ. Spending (1880-1940)", size = 2.5) +
+  geom_text(x = 25, y = 5, label = "Income Per Capita (1880-1940)", size = 2.5) +
+  geom_text(x = -10, y = 5.5, label = "Model 4") +
+  geom_text(x = 25, y = 4, label = "Transp. Spending (Full Sample)", size = 2.5) +
+  geom_text(x = 25, y = 3, label = "Income Per Capita (Full Sample)", size = 2.5) +
+  geom_text(x = -10, y = 3.5, label = "Model 5") +
+  geom_text(x = 25, y = 2, label = "Transp. Spending (1880-1940)", size = 2.5) +
+  geom_text(x = 25, y = 1, label = "Income Per Capita (1880-1940)", size = 2.5) +
+  geom_text(x = -10, y = 1.5, label = "Model 6") +
   geom_vline(xintercept = 0, col = 'red', lty = 'dashed') +
-  scale_shape_manual(values = c(21, 22)) +
+  scale_shape_manual(values = c(21, 22, 23)) +
   ggtitle("Coefficient Plot: Table 3", subtitle = "(DV: Income Per Capita, 30 Years Later)") +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_x_continuous(limits = c(-11, 30))
 ```

@@ -914,9 +914,9 @@ coef_df1 %>%
   geom_vline(xintercept = 0, col = 'red', lty = 'dashed') +
   theme_minimal() +
   labs(x = 'Coefficient Estimate', y = '') +
-  geom_text(x = -1, y = 9.5, label = "DV: Education Spending") +
-  geom_text(x = -1.1, y = 5.5, label = "DV: Health Spending") +
-  geom_text(x = -0.8, y = 1.5, label = "DV: Transportation Spending") +
+  geom_text(x = -0.9, y = 9.5, label = "DV: Education Spending") +
+  geom_text(x = -1., y = 5.5, label = "DV: Health Spending") +
+  geom_text(x = -0.7, y = 1.5, label = "DV: Transportation Spending") +
   geom_text(x = 3, y = 10.5, label = "No Covariates (Model 1)", size = 3) +
   geom_text(x = 3, y = 8.5, label = "With Covariates (Model 2)", size = 3) +
   geom_text(x = 3, y = 6.5, label = "No Covariates (Model 3)", size = 3) +
